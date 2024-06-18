@@ -8,7 +8,8 @@
   virtualisation = { 
     containers = {
       enable = true;
-      cdi.dynamic.nvidia.enable = true;
+      # has been renamed
+      #cdi.dynamic.nvidia.enable = true;
     };
 
     podman = {

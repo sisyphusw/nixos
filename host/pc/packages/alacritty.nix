@@ -5,6 +5,7 @@
   environment.systemPackages = with pkgs; [
     alacritty
     alacritty-theme
+    ueberzugpp # draw images 
   ];
   
   # setup in home-manager

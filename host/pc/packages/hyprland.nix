@@ -21,40 +21,31 @@
   };
 
   environment.sessionVariables = {
-    #- Hint electron apps to use wayland
-    NIXOS_OZONE_WL = "1";
-    ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
     WLR_NO_HARDWARE_CURSORS = "1";
 
-    GBM_BACKEND = "nvidia-drm";
-    CLUTTER_BACKEND = "wayland";
-    # VA-API hardware video acceleration
-    NVD_BACKEND = "direct";
+    # electron apps to use wayland
+    NIXOS_OZONE_WL = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    # hardware acceleration
-    LIBVA_DRIVER_NAME = "nvidia";
+
+    XDG_SESSION_TYPE = "wayland";
+    CLUTTER_BACKEND = "wayland";
+    QT_QPA_PLATFORM = "wayland";
 
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_DESKTOP = "Hyprland";
-    XDG_SESSION_TYPE = "wayland";
+
+    CLIPBOARD_NOGUI="1";
+    CLIPBOARD_THEME="ansi";
+    CLIPBOARD_NOAUDIO="1";
+    #CLIPBOARD_NOPROGRESS="1";
   };
 
   # dependency packages
   environment.systemPackages = with pkgs; [
     wayland
     sddm-chili-theme
-
-    # xdg
-    xdg-utils
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
-
-    # qt
-    libsForQt5.qt5.qtwayland
-    qt6.qtwayland
 
     # VA-API
     libva-utils
@@ -63,24 +54,55 @@
     gsettings-desktop-schemas
     hyprland-protocols
 
+    # status bar
+    waybar
+
     # clipboard manager
     wl-clipboard
-    cliphist
+    clipboard-jh
 
     # screenshot
     grim
     slurp
 
-    # notification
-    dunst
-    
-    #mako
     # hyprland plugins
     pyprland
+
+    # wallpaper
+    hyprpaper
+
+    # color picker
+    hyprpicker
+
+    # file browser
+    dolphin
+
+
+    # Must Have - https://wiki.hyprland.org/Useful-Utilities/Must-have/
+
+    # A notification daemon
+    dunst
+
+    # Pipewire
+
+    # XDG Desktop Portal
+    xdg-utils
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-hyprland
+
+    # Authentication Agent
+    polkit-kde-agent
+
+    # Qt Wayland Support
+    libsForQt5.qt5.qtwayland
+    qt6.qtwayland
   ];
 
   # must have
   security.polkit.enable = true;
+
+  #services.xserver.desktopManager.runXdgAutostartIfNone
 
   #xdg.configFile."hypr/hyprland.conf".enable = lib.mkForce false;
   #home.file.".config/hypr/hyprland.conf".enable = lib.mkForce false;

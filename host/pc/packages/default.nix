@@ -33,43 +33,48 @@
   #           config in dotfiles              #
   #-------------------------------------------#
   environment.systemPackages = with pkgs; [
+    git              # version control
+    fish             # shell
+    bash             # bash
+    htop             # process manager
+    fzf              # fuzze finder
+    zoxide           # enhance 'cd'
     unzip
     wget
     curl             # network tool
-    git              # version control
-    bash             # bash
-
     stow             # dotfiles manager
-
-    fish             # shell
-    kitty            # terminal emulator
-    starship         # shell prompt
-
     tmux             # shell session manager
-
-    firefox          # web browser
-
-    fzf              # fuzze finder
-    lazygit          # git tui
-
-    
-    yazi             # tui file manager
-    zoxide           # enhance 'cd'
-    bat              # enhance 'cat'
-    killall          # process
-    fastfetch        # monitor info
-    eza              # enhance 'ls'
     tldr             # simple document
-    thefuck          # collect cmd
+    ntfs3g
+
+    lazygit          # git tui
+    yazi             # file browser tui
+
+    #starship         # shell prompt
+
+    kitty            # terminal emulator
+    firefox          # web browser
+    fastfetch        # monitor info
+    
+    killall          # process
+    # mordern unix
+    broot            # tree
+    bat              # cat
+    fd               # find
+    #eza              # enhance 'ls'
+    #thefuck          # collect cmd
 
     #wineWowPackages.stable
     #wine
     #wineWowPackages.waylandFull
+    python312
+    python312Packages.pip
+    python312Packages.virtualenv
 
     # social medida
     # discord
     # qq
   ] ++ [
-    inputs.amber.packages.${pkgs.system}.default 
+    #inputs.amber.packages.${pkgs.system}.default 
   ];
 }

@@ -14,7 +14,13 @@
     stylua                  # lua formater
     selene                  # lua linter
 
+    pyright
+    ruff
+
     nil                     # nix lsp
     alejandra               # nix formater
+
+    #nodePackages_latest.vscode-json-languageserver #json
+    nodePackages_latest.vscode-json-languageserver-bin#json
   ];
 }

@@ -10,10 +10,14 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix") # hardware-configuration include
 
-    ./nix.nix             # nix setting
-    ./gpu.nix
-    ./font.nix
-    ./disk-config.nix     # disk partion
+    ./modules/disk-config.nix     # disk partion
+    ./modules/stylix.nix
+    #./modules/home.nix
+
+    ./modules/nvidia.nix
+    ./modules/nix.nix             # nix setting
+    ./modules/font.nix
+
     ./packages # package config
   ];
   # nixpkgs
@@ -34,6 +38,7 @@
     enable = true;
     device = "nodev";
     efiSupport = true;
+    useOSProber = true;
 #efiInstallAsRemovable = true;
   };
 
@@ -60,8 +65,17 @@
     pavucontrol  # gui tool
   ];
 
- # locale
- i18n.defaultLocale = "en_US.UTF-8";
+  # locale
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    inputMethod = {
+      enabled = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-chinese-addons
+        fcitx5-gtk
+      ];
+    };
+  };
 
 
  # timezone
@@ -81,12 +95,13 @@
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish; # default shell
+    #ignoreShellProgramCheck = true;
   };
   programs.fish.enable = true; # set the user default shell to fish
+  
 
-
-  # nixos config path
-   environment.etc."nixos".source = lib.mkForce /home/sisy/Repositories
+  # security
+  security.polkit.enable = true;
 
 
   system.stateVersion = "23.11"; # dot not change this

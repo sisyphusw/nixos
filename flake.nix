@@ -20,6 +20,9 @@
     xremap-flake.url = "github:xremap/nix-flake";
 
     amber.url = "github:Ph0enixKM/Amber";
+
+    stylix.url = "github:danth/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -27,6 +30,7 @@
     nixpkgs,
     home-manager,
     disko,
+    stylix,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -44,6 +48,13 @@
         modules = [
           ./host/pc/configuration.nix
           disko.nixosModules.disko
+          stylix.nixosModules.stylix
+          home-manager.nixosModules.home-manager {
+            #home-manager.backupFileExtension = "backup";
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.sisy = import ./host/pc/modules/home.nix;
+          }
         ];
         specialArgs ={inherit system inputs;};
       };
@@ -61,9 +72,9 @@
   nixConfig = {
     extra-trusted-users = ["sisy"];
     extra-trusted-substituters = [
+      "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store/"
       "https://mirror.sjtu.edu.cn/nix-channels/store"
       "https://mirrors.ustc.edu.cn/nix-channels/store"
-      "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store/"
 
       "https://nix-config.cachix.org"
       "https://nix-community.cachix.org"
